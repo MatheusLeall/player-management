@@ -89,3 +89,9 @@ async def update_player(player_id, player: Player):
     player_update_information = dict(player)
     conn.local.player.find_one_and_update({"_id": ObjectId(player_id)}, {"$set": player_update_information})
     return player_schema(conn.local.player.find_one({"_id": ObjectId(player_id)}))
+
+@router.delete("/players/{player_id}")
+async def delete_player(player_id):
+    return player_schema(
+        conn.local.player.find_one_and_delete({"_id": ObjectId(player_id)})
+    )
